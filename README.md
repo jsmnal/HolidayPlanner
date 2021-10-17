@@ -6,17 +6,14 @@ Example: <br>
 planner = HolidayPlanner("10.10.2021-17.10.2021") <br>
 planner.holiday_day_consumption()
 
-### Understanding the task:
-I understood that in this task the idea was to take timespan (written in a commonly used way in Finland e.g. 1.1.2021-1.2.2021) and make the class that can provide the number of holiday days a worker needs if wants to have a holiday during the given time period. As in Finland, the Saturdays were count as a days that consume holiday days whereas Sundays do not. Also the given Finnish national holidays needed to take into account. 
-
 ### Resolving process in a nutshell:
 I started to resolve the task as following pieces:
-1. The timespan input.
+1. The timespan input (written in a commonly used way in Finland e.g. 1.1.2021-1.2.2021)
 2. Splitting the time span to beginning and end dates as easier to calculate with them.
 3. Calculating the total number of days in the given timespan.
-4. Adding the requirements/validation criteria of the timespan.
-5. Taking the Sundays off.
-6. Taking the given Finnish national holidays off.
+4. Adding the requirements/validation criteria of the timespan (max length 50 days,fit within the holiday period 1.4.-31.3.).
+5. Taking the Sundays off as they do not consume holiday days.
+6. Taking the given Finnish national holidays off as they do not consume holiday says.
 7. Calculating the number of holiday days needed.
 8. Cleaning and refactoring the code.
 
