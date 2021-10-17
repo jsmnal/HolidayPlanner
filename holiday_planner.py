@@ -4,45 +4,44 @@ class HolidayPlanner():
     def __init__(self,timespan):
         self.timespan = timespan
         self.beginning = datetime.strptime(timespan.split("-")[0],'%d.%m.%Y').date()
-        self.ending = datetime.strptime(timespan.split("-")[1],'%d.%m.%Y').date()
-
+        self.end = datetime.strptime(timespan.split("-")[1],'%d.%m.%Y').date()
+        self.national_holidays = [date(2020,1,1), date(2020,1,6), date(2020,4,10), date(2020,4,13), date(2020,5,1), date(2020,5,21), date(2020,6,19), date(2020,12,24), date(2020,12,25), date(2021,1,1), date(2021,1,6), date(2021,4,2), date(2021,4,5), date(2021,5,13), date(2021,6,20), date(2021,12,6), date(2021,12,24)]
+    
     def calculate_days(self):
-        num_of_days = (self.ending-self.beginning).days
+        num_of_days = (self.end-self.beginning).days + 1
         return num_of_days
     
     def timespan_is_valid(self):
-        if self.calculate_days() <= 50 and self.ending >= self.beginning:
-            if self.ending.month>=4 and self.beginning.month<=3:
+        if self.calculate_days() <= 50 and self.end >= self.beginning:
+            if self.end.month>=4 and self.beginning.month<=3: ## timespan needs to fit within the Finnish holiday period
                 return False
             else:
                 return True
         else:
             return False
     
-    def take_sundays(self):
-        num_of_days = 0
-        self.ending = self.ending + timedelta(days=1)
-        while(self.ending > self.beginning):
-            self.ending = self.ending - timedelta(days=1)
-            if self.ending.isoweekday() <= 6:
-                num_of_days = num_of_days + 1
-        return num_of_days
+    def calculate_sundays(self):
+        num_of_sundays = 0
+        self.end = self.end + timedelta(days=1)
+        while(self.end > self.beginning):
+            self.end = self.end - timedelta(days=1)
+            if self.end.isoweekday() == 7:
+                num_of_sundays = num_of_sundays + 1
+        return num_of_sundays
     
-    def take_national_holidays(self):
-        national_holidays = [date(2020,1,1), date(2020,1,6), date(2020,4,10), date(2020,4,13), date(2020,5,1), date(2020,5,21), date(2020,6,19), date(2020,12,24), date(2020,12,25), date(2021,1,1), date(2021,1,6), date(2021,4,2), date(2021,4,5), date(2021,5,13), date(2021,6,20), date(2021,12,6), date(2021,12,24)]
-        holidays_needed = self.take_sundays()
-        for holiday in national_holidays:
-            if self.beginning <= holiday <= self.ending:
-                    holidays_need = holidays_needed - 1
-                    holidays_needed = holidays_need
-        return int(holidays_needed)
+    ## calculate national holidays that are not on Sundays
+    def calculate_national_holidays(self):
+        num_of_national_holidays = 0
+        for holiday in self.national_holidays:
+            if self.beginning <= holiday <= self.end and holiday.isoweekday() != 7:
+                num_of_national_holidays = num_of_national_holidays + 1
+        return num_of_national_holidays
 
     def holiday_day_consumption(self):
         if self.timespan_is_valid():
-            total = self.take_national_holidays()
-            return total
+            num_of_holiday_days = self.calculate_days() - self.calculate_national_holidays() - self.calculate_sundays()
+            return num_of_holiday_days
         else:
             return("Timespan is not valid")
 
-                
 
