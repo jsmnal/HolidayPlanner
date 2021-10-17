@@ -2,8 +2,8 @@
 
 HolidayPlanner class that calculates how many holiday days a worker needs to use in a certain timespan given as a string input when given Finnish national holidays has been taken into account.
 
-Example:
-planner = HolidayPlanner("10.10.2021-17.10.2021")
+Example: <br>
+planner = HolidayPlanner("10.10.2021-17.10.2021") <br>
 planner.holiday_day_consumption()
 
 ### Understanding the task:
