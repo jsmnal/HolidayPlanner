@@ -54,7 +54,7 @@ class HolidayPlanner():
 
     def holiday_day_consumption(self):
         try:
-            if self.timespan_is_valid() and self.end.isoweekday() == 5: ##if the end date is Friday, the Saturday also count
+            if self.timespan_is_valid() and self.end.isoweekday() == 5: ##if the end date is Friday, the Saturday also counts
                 num_of_holiday_days = self.calculate_days() - self.calculate_national_holidays() - self.calculate_sundays() + 1
                 return num_of_holiday_days
             elif self.timespan_is_valid():
